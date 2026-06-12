@@ -8,56 +8,47 @@ const themes = {
       second: "🍥",
     },
     colors: {
-      primary: "oklch(70% 0.12 20)",
-      secondary: "oklch(85% 0.08 20)",
-      neutral: "oklch(25% 0.02 20)",
-      theme: "oklch(98% 0.01 20)",
+      primary: "#F3B8AD",
+      secondary: "#E15B62",
+      neutral: "#854547",
+      theme: "#F1DCD9",
     },
-    imgBgDesktop: "",
-    imgBgMobile: "",
+    imgBgDesktop: "https://github.com/beatriz-sait07/imagens-widgets/blob/main/sakuras-wpp-desktop.png?raw=true",
+    imgBgMobile: "https://github.com/beatriz-sait07/imagens-widgets/blob/main/sakuras-wpp-mobile.png?raw=true",
     icon: "🌸",
   },
 
   ninja: {
     players: {
-      first: "X",
-      second: "O",
+      first: "🐾",
+      second: "🗡️",
     },
     colors: {
-      primary: "oklch(46.6% 0.025 107.3)",
-      secondary: "oklch(22.8% 0.013 107.4)",
-      neutral: "oklch(15.3% 0.006 107.1)",
-      theme: "oklch(98.8% 0.003 106.5)",
+      primary: "#A32622",
+      secondary: "#2F3030",
+      neutral: "#1C1D1D",
+      theme: "#D8D0C3",
     },
-    imgBgDesktop: "",
-    imgBgMobile: "",
-    icon: "🥷",
+    imgBgDesktop: "https://github.com/beatriz-sait07/imagens-widgets/blob/main/paisagem-japan-desktop.png?raw=true",
+    imgBgMobile: "https://github.com/beatriz-sait07/imagens-widgets/blob/main/paisagem-mobile-japan.png?raw=true",
+    icon: "🐾",
   },
 };
-
-function themeChange(isFamale) {
-  const themeToggle = isFamale
-  if (themeToggle) {
-    themes.playes.first = "🌸"
-    themes.playes.second = "🍥"
-    th
-  }
-}
 
 function Square({ value, onSquareClick }) {
   return <button className="square" onClick={onSquareClick} id={`square-${value}`}>{value}</button>;
 }
 
-function Board({ xIsNext, squares, onPlay }) {
+function Board({ xIsNext, squares, onPlay, theme }) {
   function handleClick(i) {
     if (squares[i] || calculateWinner(squares)) {
       return;
     }
     const nextSquares = squares.slice();
     if (xIsNext) {
-      nextSquares[i] = "🌸";
+      nextSquares[i] = themes[theme].players.first;
     } else {
-      nextSquares[i] = "🍥";
+      nextSquares[i] = themes[theme].players.second;
     }
     onPlay(nextSquares);
   }
@@ -156,25 +147,40 @@ export default function layoutGame() {
   if (winner) {
     status = "Ganhador: " + winner;
   } else {
-    status = "Próximo jogador: " + (xIsNext ? "🌸" : "🍥");
+    status = "Próximo jogador: " + (xIsNext ? themes[isMasculineTheme ? "ninja" : "sakura"].players.first : themes[isMasculineTheme ? "ninja" : "sakura"].players.second);
   }
+  const currentTheme = isMasculineTheme ? themes.ninja : themes.sakura;
   return (
     <>
-      <ThemeToggle
-        isMasculineTheme={isMasculineTheme}
-        onToggle={() => setIsMasculineTheme(!isMasculineTheme)}
-      />
-      <article className="bg-red-200 rounded-md w-[80%] md:w-[60%] lg:w-[40%]  flex flex-col items-center justify-start gap-4 p-4">
-        <section className="w-full min-h-[50px] flex flex-col items-center justify-center">
-          <icon className="w-8 h-8  rounded-full shadow-sm shadow-black text-center flex items-center justify-center p-2">icon</icon>
-          <h1 className="text-xl font-semibold">Jogo da Velha</h1>
-          <p className="text-xs font-thin">Aguarde sua vez, e faça sua jogada com atenção!</p>
-        </section>
-        <section>
-          <p>{status}</p>
-          <Board xIsNext={xIsNext} squares={squares} onPlay={handlePlay} />
-        </section>
-      </article>
+      <div
+        className="
+      w-full h-full flex items-center justify-center gap-4 p-4
+      bg-[image:var(--bg-mobile)]
+      lg:bg-[image:var(--bg-desktop)]
+      bg-cover bg-center bg-no-repeat
+      transition-all duration-500
+    "
+        style={{
+          "--bg-mobile": `url(${currentTheme.imgBgMobile})`,
+          "--bg-desktop": `url(${currentTheme.imgBgDesktop})`,
+        }}
+      >
+        <ThemeToggle
+          isMasculineTheme={isMasculineTheme}
+          onToggle={() => setIsMasculineTheme(!isMasculineTheme)}
+        />
+        <article className="bg-red-200 rounded-md w-[80%] md:w-[60%] lg:w-[40%]  flex flex-col items-center justify-start gap-4 p-4">
+          <section className="w-full min-h-[50px] flex flex-col items-center justify-center">
+            <p className="w-8 h-8  rounded-full shadow-sm shadow-black text-center flex items-center justify-center p-2">{isMasculineTheme ? themes["ninja"]?.icon : themes["sakura"]?.icon}</p>
+            <h1 className="text-xl font-semibold">Jogo da Velha</h1>
+            <p className="text-xs font-thin">Aguarde sua vez, e faça sua jogada com atenção!</p>
+          </section>
+          <section>
+            <p>{status}</p>
+            <Board xIsNext={xIsNext} squares={squares} onPlay={handlePlay} theme={isMasculineTheme ? "ninja" : "sakura"} />
+          </section>
+        </article>
+      </div>
     </>
   )
 }
