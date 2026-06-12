@@ -156,8 +156,6 @@ function LayoutPlayers({ multiplayer, currentTheme }) {
   )
 }
 
-
-
 function LayoutResetGame({ onReset, themes }) {
   return (
     <button onClick={onReset} className="flex items-center gap-2 px-4 py-2 rounded-md font-bold shadow-md backdrop-blur-lg"
@@ -173,10 +171,34 @@ function LayoutResetGame({ onReset, themes }) {
   )
 }
 
+function FooterCompany({ theme }) {
+  return (
+    <footer className="text-center text-xs text-gray-500 mt-4 bg-red-600 h-10 fixed bottom-0 w-full flex items-center justify-center"
+      style={{
+        backgroundColor: `${theme.colors.primary}`,
+        color: theme.colors.secondary,
+      }}
+    >
+      <p>Desenvolvido por
+        <a href="https://www.linkedin.com/in/beatriz-saito-446115247/" target="_blank" rel="noopener noreferrer"
+          className="underline font-bold ml-1"
+        >Beatriz Saito</a></p>
+    </footer>
+  );
+}
+
 export default function layoutGame() {
   const [xIsNext, setXIsNext] = useState(true);
   const [squares, setSquares] = useState(Array(9).fill(null));
   const [isMasculineTheme, setIsMasculineTheme] = useState(false);
+
+
+  const currentTheme = isMasculineTheme ? themes.ninja : themes.sakura;
+  const winner = calculateWinner(squares);
+  let status;
+  if (winner) status = "Ganhador: " + winner;
+  else status = "Próximo jogador: " + (xIsNext ? currentTheme.players.first : currentTheme.players.second);
+
 
   function handlePlay(nextSquares) {
     setSquares(nextSquares);
@@ -187,20 +209,11 @@ export default function layoutGame() {
     setSquares(Array(9).fill(null));
     setXIsNext(true);
   }
-
-  const winner = calculateWinner(squares);
-  let status;
-  if (winner) {
-    status = "Ganhador: " + winner;
-  } else {
-    status = "Próximo jogador: " + (xIsNext ? themes[isMasculineTheme ? "ninja" : "sakura"].players.first : themes[isMasculineTheme ? "ninja" : "sakura"].players.second);
-  }
-  const currentTheme = isMasculineTheme ? themes.ninja : themes.sakura;
   return (
     <>
       <div
         className="
-          w-full h-full flex items-center justify-center gap-4 p-4
+          w-full h-full flex flex-col items-center justify-center gap-4 p-4
           bg-[image:var(--bg-mobile)]
           lg:bg-[image:var(--bg-desktop)]
           bg-cover bg-center bg-no-repeat
@@ -231,6 +244,7 @@ export default function layoutGame() {
           </section>
           <LayoutResetGame onReset={resetGame} themes={currentTheme} />
         </article>
+        <FooterCompany theme={currentTheme} />
       </div>
     </>
   );
