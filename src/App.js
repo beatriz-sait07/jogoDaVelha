@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import { IconRestart } from "./assets/iconRestart.jsx";
 
 const themes = {
   sakura: {
@@ -49,8 +49,8 @@ function Board({ xIsNext, squares, onPlay, theme }) {
 
     const nextSquares = squares.slice();
     nextSquares[i] = xIsNext
-      ? themes[theme].players.first
-      : themes[theme].players.second;
+      ? theme.players.first
+      : theme.players.second;
 
     onPlay(nextSquares);
   }
@@ -158,6 +158,23 @@ function LayoutPlayers({ multiplayer, currentTheme }) {
   )
 }
 
+
+
+function LayoutResetGame({ onReset, themes }) {
+  return (
+    <button onClick={onReset} className="flex items-center gap-2 px-4 py-2 rounded-md font-bold shadow-md backdrop-blur-lg"
+      style={{
+        border: `1px solid ${themes.colors.primary}33`,
+        borderColor: `${themes.colors.primary}88`,
+        color: themes.colors.secundary,
+      }}
+    >
+      <IconRestart />
+      Reiniciar Jogo
+    </button>
+  )
+}
+
 export default function layoutGame() {
   const [xIsNext, setXIsNext] = useState(true);
   const [squares, setSquares] = useState(Array(9).fill(null));
@@ -166,6 +183,11 @@ export default function layoutGame() {
   function handlePlay(nextSquares) {
     setSquares(nextSquares);
     setXIsNext(!xIsNext);
+  }
+
+  function resetGame() {
+    setSquares(Array(9).fill(null));
+    setXIsNext(true);
   }
 
   const winner = calculateWinner(squares);
@@ -205,10 +227,11 @@ export default function layoutGame() {
             </section>
           </section>
           <LayoutPlayers multiplayer={currentTheme.players} currentTheme={currentTheme} />
-          <section>
-            <Board xIsNext={xIsNext} squares={squares} onPlay={handlePlay} theme={isMasculineTheme ? "ninja" : "sakura"} />
-            <p className="text-[10px] font-thin">{status}</p>
+          <section className="max-w-full">
+            <Board xIsNext={xIsNext} squares={squares} onPlay={handlePlay} theme={currentTheme} />
+            <p className="text-[10px] font-thin text-center mt-2">{status}</p>
           </section>
+          <LayoutResetGame onReset={resetGame} themes={currentTheme} />
         </article>
       </div>
     </>

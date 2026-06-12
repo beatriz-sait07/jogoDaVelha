@@ -67,37 +67,14 @@ ul {
   font-family: serif, 'Times New Roman', Times;
 }
 
-/* .square {
-  background: #fff;
-  border: 1px solid #999;
-  float: left;
-  font-size: 24px;
-  font-weight: bold;
-  line-height: 34px;
-  height: 34px;
-  margin-right: -1px;
-  margin-top: -1px;
-  padding: 0;
-  text-align: center;
-  width: 34px;
-}
-
-*/
-/* .board-row:after {
-  clear: both;
-  content: '';
-  display: table;
-}
-
-*/
-
 .board {
-  width: min(80vw, 420px);
+  width: min(80vw, 380px);
   aspect-ratio: 1 / 1;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   grid-template-rows: repeat(3, minmax(0, 1fr));
   gap: 8px;
+  max-width: 100%;
 }
 
 .square {
@@ -106,7 +83,6 @@ ul {
   display: grid;
   place-items: center;
   font-size: min(10cqi);
-  /* line-height: 1; */
   border: 1px solid rgb(176, 176, 176);
   border-radius: 10px;
   background: transparent;
