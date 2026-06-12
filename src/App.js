@@ -1,5 +1,49 @@
 import { useState } from "react";
 
+
+const themes = {
+  sakura: {
+    players: {
+      first: "🌸",
+      second: "🍥",
+    },
+    colors: {
+      primary: "oklch(70% 0.12 20)",
+      secondary: "oklch(85% 0.08 20)",
+      neutral: "oklch(25% 0.02 20)",
+      theme: "oklch(98% 0.01 20)",
+    },
+    imgBgDesktop: "",
+    imgBgMobile: "",
+    icon: "🌸",
+  },
+
+  ninja: {
+    players: {
+      first: "X",
+      second: "O",
+    },
+    colors: {
+      primary: "oklch(46.6% 0.025 107.3)",
+      secondary: "oklch(22.8% 0.013 107.4)",
+      neutral: "oklch(15.3% 0.006 107.1)",
+      theme: "oklch(98.8% 0.003 106.5)",
+    },
+    imgBgDesktop: "",
+    imgBgMobile: "",
+    icon: "🥷",
+  },
+};
+
+function themeChange(isFamale) {
+  const themeToggle = isFamale
+  if (themeToggle) {
+    themes.playes.first = "🌸"
+    themes.playes.second = "🍥"
+    th
+  }
+}
+
 function Square({ value, onSquareClick }) {
   return <button className="square" onClick={onSquareClick} id={`square-${value}`}>{value}</button>;
 }
@@ -11,9 +55,9 @@ function Board({ xIsNext, squares, onPlay }) {
     }
     const nextSquares = squares.slice();
     if (xIsNext) {
-      nextSquares[i] = "X";
+      nextSquares[i] = "🌸";
     } else {
-      nextSquares[i] = "O";
+      nextSquares[i] = "🍥";
     }
     onPlay(nextSquares);
   }
@@ -59,9 +103,48 @@ function calculateWinner(squares) {
   return null;
 }
 
+function ThemeToggle({ isMasculineTheme, onToggle }) {
+  return (
+    <button
+      type="button"
+      onClick={onToggle}
+      aria-pressed={isMasculineTheme}
+      className={`
+            absolute top-[2%] right-[5%]
+            w-20 h-10 rounded-full p-1
+            flex items-center
+            transition-all duration-300 ease-in-out
+            border border-white/30 shadow-lg backdrop-blur-md
+
+            ${isMasculineTheme
+          ? "bg-zinc-800/80"
+          : "bg-pink-200/80"
+        }
+          `}
+    >
+      <span
+        className={`
+              w-8 h-8 rounded-full
+              flex items-center justify-center
+              text-sm font-bold shadow-md
+              transition-all duration-300 ease-in-out
+
+              ${isMasculineTheme
+            ? "translate-x-10 bg-red-700 text-white"
+            : "translate-x-0 bg-white text-pink-500"
+          }
+            `}
+      >
+        {isMasculineTheme ? "♂" : "♀"}
+      </span>
+    </button>
+  );
+}
+
 export default function layoutGame() {
   const [xIsNext, setXIsNext] = useState(true);
   const [squares, setSquares] = useState(Array(9).fill(null));
+  const [isMasculineTheme, setIsMasculineTheme] = useState(false);
 
   function handlePlay(nextSquares) {
     setSquares(nextSquares);
@@ -73,15 +156,25 @@ export default function layoutGame() {
   if (winner) {
     status = "Ganhador: " + winner;
   } else {
-    status = "Próximo jogador: " + (xIsNext ? "X" : "O");
+    status = "Próximo jogador: " + (xIsNext ? "🌸" : "🍥");
   }
   return (
     <>
-      <header className="text-red-500">Jogo da Velha</header>
-      <main>
-        <p>{status}</p>
-        <Board xIsNext={xIsNext} squares={squares} onPlay={handlePlay} />
-      </main>
+      <ThemeToggle
+        isMasculineTheme={isMasculineTheme}
+        onToggle={() => setIsMasculineTheme(!isMasculineTheme)}
+      />
+      <article className="bg-red-200 rounded-md w-[80%] md:w-[60%] lg:w-[40%]  flex flex-col items-center justify-start gap-4 p-4">
+        <section className="w-full min-h-[50px] flex flex-col items-center justify-center">
+          <icon className="w-8 h-8  rounded-full shadow-sm shadow-black text-center flex items-center justify-center p-2">icon</icon>
+          <h1 className="text-xl font-semibold">Jogo da Velha</h1>
+          <p className="text-xs font-thin">Aguarde sua vez, e faça sua jogada com atenção!</p>
+        </section>
+        <section>
+          <p>{status}</p>
+          <Board xIsNext={xIsNext} squares={squares} onPlay={handlePlay} />
+        </section>
+      </article>
     </>
   )
 }
