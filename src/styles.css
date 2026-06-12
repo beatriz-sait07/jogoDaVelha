@@ -91,6 +91,26 @@ ul {
 
 */
 
+.board {
+  width: min(80vw, 420px);
+  aspect-ratio: 1 / 1;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.square {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  font-size: min(10cqi);
+  /* line-height: 1; */
+  border: 1px solid rgb(176, 176, 176);
+  border-radius: 10px;
+  background: transparent;
+}
 .status {
   margin-bottom: 10px;
 }

@@ -36,44 +36,31 @@ const themes = {
 };
 
 function Square({ value, onSquareClick }) {
-  return <button className="square
-  
-  "
-    onClick={onSquareClick} id={`square-${value}`}>{value}</button>;
+  return (
+    <button className="square" onClick={onSquareClick}>
+      {value}
+    </button>
+  );
 }
 
 function Board({ xIsNext, squares, onPlay, theme }) {
   function handleClick(i) {
-    if (squares[i] || calculateWinner(squares)) {
-      return;
-    }
+    if (squares[i] || calculateWinner(squares)) return;
+
     const nextSquares = squares.slice();
-    if (xIsNext) {
-      nextSquares[i] = themes[theme].players.first;
-    } else {
-      nextSquares[i] = themes[theme].players.second;
-    }
+    nextSquares[i] = xIsNext
+      ? themes[theme].players.first
+      : themes[theme].players.second;
+
     onPlay(nextSquares);
   }
 
   return (
-    <>
-      <div className="board-row">
-        <Square value={squares[0]} onSquareClick={() => handleClick(0)} />
-        <Square value={squares[1]} onSquareClick={() => handleClick(1)} />
-        <Square value={squares[2]} onSquareClick={() => handleClick(2)} />
-      </div>
-      <div className="board-row">
-        <Square value={squares[3]} onSquareClick={() => handleClick(3)} />
-        <Square value={squares[4]} onSquareClick={() => handleClick(4)} />
-        <Square value={squares[5]} onSquareClick={() => handleClick(5)} />
-      </div>
-      <div className="board-row">
-        <Square value={squares[6]} onSquareClick={() => handleClick(6)} />
-        <Square value={squares[7]} onSquareClick={() => handleClick(7)} />
-        <Square value={squares[8]} onSquareClick={() => handleClick(8)} />
-      </div>
-    </>
+    <div className="board">
+      {squares.map((value, i) => (
+        <Square key={i} value={value} onSquareClick={() => handleClick(i)} />
+      ))}
+    </div>
   );
 }
 
@@ -208,7 +195,7 @@ export default function layoutGame() {
           isMasculineTheme={isMasculineTheme}
           onToggle={() => setIsMasculineTheme(!isMasculineTheme)}
         />
-        <article className={`backdrop-blur-lg shadow-xl rounded-lg w-[80%] md:w-[60%] lg:w-[40%]  flex flex-col items-center justify-start gap-4 p-4`}
+        <article className={`backdrop-blur-lg shadow-md shadow-zinc-700 rounded-lg w-[80%] md:w-[60%] lg:w-[40%]  flex flex-col items-center justify-start gap-4 p-4`}
         >
           <section className="w-full min-h-[50px] flex flex-col items-center justify-center gap-4">
             <p className="w-12 h-12  rounded-full shadow-sm shadow-black text-center flex items-center justify-center p-2">{isMasculineTheme ? themes["ninja"]?.icon : themes["sakura"]?.icon}</p>
@@ -220,7 +207,7 @@ export default function layoutGame() {
           <LayoutPlayers multiplayer={currentTheme.players} currentTheme={currentTheme} />
           <section>
             <Board xIsNext={xIsNext} squares={squares} onPlay={handlePlay} theme={isMasculineTheme ? "ninja" : "sakura"} />
-            <p>{status}</p>
+            <p className="text-[10px] font-thin">{status}</p>
           </section>
         </article>
       </div>
