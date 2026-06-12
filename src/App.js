@@ -27,7 +27,7 @@ function Board() {
 export default function layoutGame() {
   return (
     <>
-      <header>Jogo da Velha</header>
+      <header className="text-red-500">Jogo da Velha</header>
       <main>
         <Board />
       </main>
