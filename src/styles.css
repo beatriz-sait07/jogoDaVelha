@@ -67,7 +67,7 @@ ul {
   font-family: serif, 'Times New Roman', Times;
 }
 
-.square {
+/* .square {
   background: #fff;
   border: 1px solid #999;
   float: left;
@@ -82,11 +82,14 @@ ul {
   width: 34px;
 }
 
-.board-row:after {
+*/
+/* .board-row:after {
   clear: both;
   content: '';
   display: table;
 }
+
+*/
 
 .status {
   margin-bottom: 10px;

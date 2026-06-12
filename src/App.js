@@ -36,7 +36,10 @@ const themes = {
 };
 
 function Square({ value, onSquareClick }) {
-  return <button className="square" onClick={onSquareClick} id={`square-${value}`}>{value}</button>;
+  return <button className="square
+  
+  "
+    onClick={onSquareClick} id={`square-${value}`}>{value}</button>;
 }
 
 function Board({ xIsNext, squares, onPlay, theme }) {
@@ -108,8 +111,8 @@ function ThemeToggle({ isMasculineTheme, onToggle }) {
             border border-white/30 shadow-lg backdrop-blur-md
 
             ${isMasculineTheme
-          ? "bg-zinc-800/80"
-          : "bg-pink-200/80"
+        ? themes.ninja.colors.primary
+        : themes.sakura.colors.primary
         }
           `}
     >
@@ -130,6 +133,42 @@ function ThemeToggle({ isMasculineTheme, onToggle }) {
       </span>
     </button>
   );
+}
+
+function LayoutPlayers({ multiplayer, currentTheme }) {
+  console.log(multiplayer)
+  return (
+    <div className="flex items-center gap-4 w-full justify-center ">
+      <p className="text-center flex items-center justify-end w-[35%]">{multiplayer?.first}</p>
+      <section className="flex w-full items-center justify-center px-4">
+        <div
+          className="h-px flex-1"
+          style={{ backgroundColor: `${currentTheme.colors.neutral}55` }}
+        />
+
+        <div
+          className="mx-3 flex h-10 w-10 rotate-45 items-center justify-center rounded-sm border shadow-md backdrop-blur-md"
+          style={{
+            backgroundColor: `${currentTheme.colors.primary}33`,
+            borderColor: `${currentTheme.colors.primary}88`,
+          }}
+        >
+          <span
+            className="-rotate-45 text-xs font-bold tracking-wider"
+            style={{ color: currentTheme.colors.neutral }}
+          >
+            VS
+          </span>
+        </div>
+
+        <div
+          className="h-px flex-1"
+          style={{ backgroundColor: `${currentTheme.colors.neutral}55` }}
+        />
+      </section>
+      <p className="text-center flex items-center justify-start w-[35%]">{multiplayer?.second}</p>
+    </div>
+  )
 }
 
 export default function layoutGame() {
@@ -154,12 +193,12 @@ export default function layoutGame() {
     <>
       <div
         className="
-      w-full h-full flex items-center justify-center gap-4 p-4
-      bg-[image:var(--bg-mobile)]
-      lg:bg-[image:var(--bg-desktop)]
-      bg-cover bg-center bg-no-repeat
-      transition-all duration-500
-    "
+          w-full h-full flex items-center justify-center gap-4 p-4
+          bg-[image:var(--bg-mobile)]
+          lg:bg-[image:var(--bg-desktop)]
+          bg-cover bg-center bg-no-repeat
+          transition-all duration-500
+        "
         style={{
           "--bg-mobile": `url(${currentTheme.imgBgMobile})`,
           "--bg-desktop": `url(${currentTheme.imgBgDesktop})`,
@@ -169,20 +208,24 @@ export default function layoutGame() {
           isMasculineTheme={isMasculineTheme}
           onToggle={() => setIsMasculineTheme(!isMasculineTheme)}
         />
-        <article className="bg-red-200 rounded-md w-[80%] md:w-[60%] lg:w-[40%]  flex flex-col items-center justify-start gap-4 p-4">
-          <section className="w-full min-h-[50px] flex flex-col items-center justify-center">
-            <p className="w-8 h-8  rounded-full shadow-sm shadow-black text-center flex items-center justify-center p-2">{isMasculineTheme ? themes["ninja"]?.icon : themes["sakura"]?.icon}</p>
+        <article className={`backdrop-blur-lg shadow-xl rounded-lg w-[80%] md:w-[60%] lg:w-[40%]  flex flex-col items-center justify-start gap-4 p-4`}
+        >
+          <section className="w-full min-h-[50px] flex flex-col items-center justify-center gap-4">
+            <p className="w-12 h-12  rounded-full shadow-sm shadow-black text-center flex items-center justify-center p-2">{isMasculineTheme ? themes["ninja"]?.icon : themes["sakura"]?.icon}</p>
+            <section className="w-full h-fit flex flex-col items-center justify-center">
             <h1 className="text-xl font-semibold">Jogo da Velha</h1>
-            <p className="text-xs font-thin">Aguarde sua vez, e faça sua jogada com atenção!</p>
+              <p className="text-xs font-thin">Aguarde sua vez, e faça sua jogada com atenção!</p>
+            </section>
           </section>
+          <LayoutPlayers multiplayer={currentTheme.players} currentTheme={currentTheme} />
           <section>
-            <p>{status}</p>
             <Board xIsNext={xIsNext} squares={squares} onPlay={handlePlay} theme={isMasculineTheme ? "ninja" : "sakura"} />
+            <p>{status}</p>
           </section>
         </article>
       </div>
     </>
-  )
+  );
 }
 /**
  * Os componentes React precisam retornar um único elemento JSX e não vários elementos JSX adjacentes, como dois botões.
