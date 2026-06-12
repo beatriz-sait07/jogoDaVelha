@@ -48,9 +48,7 @@ function Board({ xIsNext, squares, onPlay, theme }) {
     if (squares[i] || calculateWinner(squares)) return;
 
     const nextSquares = squares.slice();
-    nextSquares[i] = xIsNext
-      ? theme.players.first
-      : theme.players.second;
+    nextSquares[i] = xIsNext ? "first" : "second";
 
     onPlay(nextSquares);
   }
@@ -58,7 +56,7 @@ function Board({ xIsNext, squares, onPlay, theme }) {
   return (
     <div className="board">
       {squares.map((value, i) => (
-        <Square key={i} value={value} onSquareClick={() => handleClick(i)} />
+        <Square key={i} value={theme.players[value]} onSquareClick={() => handleClick(i)} />
       ))}
     </div>
   );
