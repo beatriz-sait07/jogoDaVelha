@@ -1,6 +1,6 @@
 {
-  "name": "react.dev",
-  "version": "0.0.0",
+  "name": "JogoDaVelha-saito",
+  "version": "0.0.1",
   "main": "/src/index.js",
   "scripts": {
     "start": "react-scripts start",
@@ -11,7 +11,8 @@
   "dependencies": {
     "react": "^19.2.1",
     "react-dom": "^19.2.1",
-    "react-scripts": "^5.0.0"
+    "react-scripts": "^5.0.0",
+    "tailwindcss-animated": "^2.1.0"
   },
   "devDependencies": {
     "tailwindcss": "^3.4.19"

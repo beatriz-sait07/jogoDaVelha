@@ -38,7 +38,11 @@ const themes = {
 function Square({ value, onSquareClick }) {
   return (
     <button className="square" onClick={onSquareClick}>
-      {value}
+      {value ? (
+        <span className="inline-block animate-jump animate-once animate-duration-500 animate-ease-out">
+          {value}
+        </span>
+      ) : null}
     </button>
   );
 }
@@ -52,6 +56,7 @@ function Board({ xIsNext, squares, onPlay, theme }) {
 
     onPlay(nextSquares);
   }
+
 
   return (
     <div className="board">
@@ -196,7 +201,7 @@ export default function layoutGame() {
   const currentTheme = isMasculineTheme ? themes.ninja : themes.sakura;
   const winner = calculateWinner(squares);
   let status;
-  if (winner) status = "Ganhador: " + winner;
+  if (winner) status = "Ganhador: " + currentTheme.players[winner];
   else status = "Próximo jogador: " + (xIsNext ? currentTheme.players.first : currentTheme.players.second);
 
 
