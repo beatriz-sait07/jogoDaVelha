@@ -1,14 +1,12 @@
 {
-  "name": "JogoDaVelha-saito",
+  "name": "jogoDaVelha-saito",
   "version": "0.0.1",
   "main": "/src/index.js",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
-    "predeploy": "npm run build",
-"deploy": "gh-pages -d build"
+    "eject": "react-scripts eject"
   },
   "dependencies": {
     "react": "^19.2.1",
@@ -19,18 +17,5 @@
   "devDependencies": {
     "gh-pages": "^6.3.0",
     "tailwindcss": "^3.4.19"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "homepage": "https://beatriz-sait07.github.io/jogoDaVelha"
+  }
 }
