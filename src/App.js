@@ -128,7 +128,7 @@ function ThemeToggle({ isMasculineTheme, onToggle }) {
 function LayoutPlayers({ multiplayer, currentTheme }) {
   console.log(multiplayer)
   return (
-    <div className="flex items-center gap-4 w-full justify-center ">
+    <div className="flex items-center gap-4 w-full justify-center max-w-full">
       <p className="text-center flex items-center justify-end w-[35%]">{multiplayer?.first}</p>
       <section className="flex w-full items-center justify-center px-4">
         <div
