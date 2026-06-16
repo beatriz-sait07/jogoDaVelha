@@ -233,7 +233,7 @@ export default function layoutGame() {
           isMasculineTheme={isMasculineTheme}
           onToggle={() => setIsMasculineTheme(!isMasculineTheme)}
         />
-        <article className={`backdrop-blur-lg shadow-md shadow-zinc-700 rounded-lg w-[80%] md:w-[60%] lg:w-[40%]  flex flex-col items-center justify-start gap-4 p-4`}
+        <article className={`backdrop-blur-lg shadow-md shadow-zinc-700 rounded-lg w-[80%] md:w-[60%] lg:w-[40%]  flex flex-col items-center justify-start gap-4 p-4 h-fit`}
         >
           <section className="w-full min-h-[50px] flex flex-col items-center justify-center gap-4">
             <p className="w-12 h-12  rounded-full shadow-sm shadow-black text-center flex items-center justify-center p-2">{isMasculineTheme ? themes["ninja"]?.icon : themes["sakura"]?.icon}</p>
