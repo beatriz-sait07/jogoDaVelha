@@ -218,7 +218,7 @@ export default function layoutGame() {
     <>
       <div
         className="
-          w-full h-full flex flex-col items-center justify-center gap-4 p-4
+          w-full min-h-screen flex flex-col items-center justify-center gap-4 p-4
           bg-[image:var(--bg-mobile)]
           lg:bg-[image:var(--bg-desktop)]
           bg-cover bg-center bg-no-repeat
